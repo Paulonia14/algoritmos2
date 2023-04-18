@@ -32,7 +32,7 @@ def insertElement(current,element,index,charIndex):
   else:
     #Para checkear si inserta
     printList(current.children)
-  for i in range(len(current.children)):
+  for i in range(0,len(current.children)):
     if current.children[i].key==element[charIndex]:
       #Comparo el caracter actual con los elementos del current.children, si 
       # son iguales vuelvo a llamar a la función
@@ -81,7 +81,48 @@ def searchWord(current,element,index,check):
   else:
     return check
 
+def delete(T,element):
+  element=element.upper()
+  if search(T,element)==False:
+    #No se encuentra la palabra dentro del árbol asi que retorna Falso
+    print("Element not Found")
+    return False
+  charIndex=0
+  deleteElement(T.root,element,charIndex)
+  return True
 
+
+def deleteElement(current,element,charIndex):
+  #Current = Node
+  for i in range(0,len(current.children)):
+    if current.children[i].key==element[charIndex]:
+      if current.children[i].isEndOfWord==True and charIndex==len(element)-1:
+        if current.children[i].children!=None:
+          #Si llego al fin de palabra pero la palabra a eliminar tiene hijos
+          current.children[i].isEndOfWord= False
+        else:
+          if len(current.children)>1:
+            #si la lista children tiene más de un nodo entonces no tengo que borrar el nodo current porque desvinculo el otro elemento de la lista children
+            current.children.pop(i)
+            return
+          else:
+            return unlink(current,element,charIndex)
+        return
+      deleteElement(current.children[i],element,charIndex+1)
+      return
+  return
+
+def unlink(current,element,charIndex):
+  #Current = Node
+  for i in range (0,len(current.children)):
+    if current.children[i].key==element[charIndex]:
+      if len(current.children)>1:
+        current.children.pop(i)
+        return
+      current.children.pop(i)
+      if current.isEndOfWord==True:
+        return
+  unlink(current.parent,element,charIndex-1)
 
 
 
