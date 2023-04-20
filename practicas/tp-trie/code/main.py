@@ -9,6 +9,21 @@ insert(T,"perro")
 insert(T,"torta")
 insert(T,"ho")
 
+T2=Trie()
+insert(T2,"pablo")
+insert(T2,"holanda")
+insert(T2,"perro")
+insert(T2,"atrot")
+insert(T2,"ho")
+insert(T2,"torta")
+
+
+"""
+print("compare trees")
+
+a=CompareTrees(T,T2)
+print("T1 y T2",a)
+
 
 a=search(T,"hola")
 print("hola esta ",a)
@@ -62,3 +77,16 @@ print("asds",asdas)
 
 asdass=search(T," ")
 print("adsaasa",asdass)
+
+b=Ejercicio6(T)
+print("T1",b)
+"""
+c=Ejercicio6(T2)
+print("T2",c)
+
+L4=[]
+L4=Ejercicio4(T,"pd",5)
+printListNormal(L4)
+
+asd=autoCompletar(Trie, "ho")
+print("Ej 7: ",asd)
