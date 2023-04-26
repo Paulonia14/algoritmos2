@@ -175,7 +175,7 @@ def CompareTrees(T1,T2):
 
 
 def Ejercicio6(T):
-  #Devuelve True si existen en el documento T dos cadenas invertidas. (ejemplo abcd y dcba)
+  #Devuelve True si existen en el documento T dos cadenas invertidas. (ejemplo: abcd y dcba)
   L1=[]
   L2=[]
   #Coloco las palabras del Trie en dos listas

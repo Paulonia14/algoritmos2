@@ -6,6 +6,7 @@ def createHash(size):
   return newHash
 
 def hash(key,m):
+  #Función de Hash usada
   return key % m
 
 #D = dictionary (lista)
@@ -41,17 +42,45 @@ def delete(D,key):
       D[position].pop(i)
       return D
 
+#Ejercicio 4
+def isPermutation(cadena1,cadena2):
+  D=createHash(cadena1)
 
 # Ejercicio 5
-def uniqueElements(D):
+def hasUniqueElements(L):
   #devuelve True si la lista que recibe de entrada tiene todos sus elementos únicos, sino False
-  for i in range(0,len(D)):
-    if search(D,D[i])==True:  #??
+  D=createHash(len(L))
+  #Creo un hash y voy metiendo valores de la lista en él, para buscarlos en ese hash para ver
+  #si ya están. Si están, retorna False, sino True.
+  for i in range(0,len(L)):
+    index=hash(L[i],len(L))
+    sameV=search(D,index)
+    if sameV!=None and sameV==L[i]:
       return False
+    insert(D,index,L[i])
   return True
 
+#Ejercicio 6
+def hashPostales(key,m):
+  #los códigos postales son de la forma cddddccc (c=caracter; d=dígito)
+  #ord() para dar el ascii de un valor
+  return ( ord(key[0])*(10**7) + key[1]*(10**6) + key[2]*(10**5) + key[3]*(10**4) + key[4]*(10**3) + ord(key[5])*(10**2) + ord(key[6])*10 + ord(key[7]) ) % m
 
 
+
+#Ejercicio 9
+def isSubset(S,T):
+  #Determina si el conjunto S es subconjunto de T
+  #S es subconjunto de T si todos sus elementos están en T
+  D=createHash(len(T))
+  for each in T:
+    #Creo un hash con el conjunto T
+    insert(D,each,each)
+  for each in S:
+    #Verifico si los elementos de S estan en T con la función search
+    if search(D,each)==None:
+      return False
+  return True
 
 # -- Extras --
 def printHash(D):
@@ -59,12 +88,6 @@ def printHash(D):
   for i in range(0,len(D)):
     print(D[i])
 
-def putKeysinList(D):
-  # como hago
-  L=[]
-  for i in range(0,len(D)):
-    L.append(D[i])
-  return L
 
 def printList(L):
   print("[ ", end="")
