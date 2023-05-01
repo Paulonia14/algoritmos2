@@ -43,21 +43,34 @@ def delete(D,key):
       return D
 
 #Ejercicio 4
-def isPermutation(cadena1,cadena2):
-  D=createHash(cadena1)
+def isPermutation(cadenaS,cadenaP):
+  if len(cadenaS)!=len(cadenaP):
+    #Si son de distinta longitud la cadenaP no puede ser una permutacion
+    return False
+  size=len(cadenaS)
+  D=createHash(size)
+  for each in cadenaS:
+    #Meto los elementos de la primera cadena en un dictionary
+    insert(D,ord(each),each)
+  for each in cadenaP:
+    #Busco los elementos de la segunda cadena en el dictionary
+    sameV=search(D,ord(each))
+    if sameV==None:
+      return False
+  return True
 
 # Ejercicio 5
 def hasUniqueElements(L):
-  #devuelve True si la lista que recibe de entrada tiene todos sus elementos únicos, sino False
+  #devuelve True si la lista que recibe de entrada tiene todos sus
+  # elementos únicos, sino False
   D=createHash(len(L))
-  #Creo un hash y voy metiendo valores de la lista en él, para buscarlos en ese hash para ver
-  #si ya están. Si están, retorna False, sino True.
+  #Creo un dictionary y voy metiendo valores de la lista en él, 
+  # para buscarlos en ese hash para ver si ya están. Si están, retorna False, sino True.
   for i in range(0,len(L)):
-    index=hash(L[i],len(L))
-    sameV=search(D,index)
+    sameV=search(D,L[i])
+    insert(D,L[i],L[i])
     if sameV!=None and sameV==L[i]:
       return False
-    insert(D,index,L[i])
   return True
 
 #Ejercicio 6
@@ -66,6 +79,57 @@ def hashPostales(key,m):
   #ord() para dar el ascii de un valor
   return ( ord(key[0])*(10**7) + key[1]*(10**6) + key[2]*(10**5) + key[3]*(10**4) + key[4]*(10**3) + ord(key[5])*(10**2) + ord(key[6])*10 + ord(key[7]) ) % m
 
+
+#Ejercicio 7
+def compressedString(cadena):
+  if len(cadena)==0:
+    #No hay cadena
+    return
+  newcadena="";cont=0
+  for i in range(len(cadena)):
+    if i+1==len(cadena):
+      cont+=1
+      newcadena=newcadena+(cadena[i]+str(cont))
+    else:  
+      if cadena[i]==cadena[i+1]:
+        cont+=1
+      else:
+        cont+=1
+        newcadena=newcadena+(cadena[i]+str(cont))
+        cont=0
+  if len(newcadena)>len(cadena):
+    return cadena
+  return newcadena
+
+
+#Ejercicio 8
+def stringOccurrence(cadenaA,cadenaP):
+  #Solución por hash (O(K*L))
+  position=None
+  if len(cadenaA)<len(cadenaP):
+    return None
+  if cadenaA==cadenaP:
+    return 0
+  D=createHash(len(cadenaA))
+  for i in range(len(cadenaA)):
+    #la key va a ser el valor ascii del elemento y el elemento va a ser una tupla con el elemento y la posición que le corresponde en la cadena
+    t=(cadenaA[i],i)
+    insert(D,ord(cadenaA[i]),t)
+  printHash(D)
+  flag=False
+  for i in range(len(cadenaP)):
+    t=search(D,ord(cadenaP[i]))
+    if t[0]==cadenaP[i]:
+      #Compara el primer elemento de la tupla (el cual es el elemento de la cadena) y si son iguales devuelve el segundo elemento de la tupla (el cual es la posición que tiene en su cadena)
+      if flag==False:
+        flag=True
+        position= t[1]
+    else:
+      return None
+  return position
+
+def stringOcurrenceWithList(cadenaA,cadenaP):
+  pass
 
 
 #Ejercicio 9
@@ -86,7 +150,7 @@ def isSubset(S,T):
 def printHash(D):
   #Imprime toda la tabla Hash
   for i in range(0,len(D)):
-    print(D[i])
+    print(f"[{i}] -> {D[i]}")
 
 
 def printList(L):
