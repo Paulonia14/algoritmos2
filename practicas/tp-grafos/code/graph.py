@@ -29,8 +29,10 @@ def existPath(graph,v1,v2):
 def isConnected(graph):
   #Implementa la operación es conexo 
   BFSList=BFS(graph,graph[0][0])
+  #BFS devuelve todos los vertices que conectan con el que le mandamos(graph[0][0])
   for each in graph:
     if each[0] not in BFSList:
+      #each[0] son los vértices que hay en el grafo, si alguno no llega a estar en esa lista que conectan al vértice "inicial", entonces no es conexo
       return False
   return True
 
@@ -39,7 +41,7 @@ def isTree(graph):
   #Implementa la operación es árbol
   if isConnected(graph)==False:
     return False
-  #Que tenga n-1 aristas(siendo n los vertices) garantiza que no tenga ciclos
+  #Que tenga v-1 aristas(siendo v los vértices) garantiza que no tenga ciclos
   #len(graph) es igual al número de vertices(n)
   if numberEdges(graph)==len(graph)-1:
     return True
@@ -121,12 +123,13 @@ def printGraph(graph):
       
 
 def BFS(graph,Vstart):
-#queue
+  #O(|V|+|E|)
+  #queue
   BFSList=[]
   queue=[]
   visited=[]
-  visited.append(Vstart)
-  BFSList.append(Vstart)
+  visited.append(Vstart) #Gray Vertex
+  BFSList.append(Vstart) #Black Vertex
   queue.append(Vstart)
   while len(queue)>0:
     positionVertex=searchVertex(graph,queue[0])
